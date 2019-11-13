@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_wanandroid/api/Api.dart';
 
 class HttpUtils {
   static Dio _dio;
@@ -40,7 +41,5 @@ class HttpUtils {
   }
 
   static BaseOptions _options = BaseOptions(
-    connectTimeout: 5000,
-    receiveTimeout: 3000,
-  );
+      connectTimeout: 5000, receiveTimeout: 3000, baseUrl: Api.BASE_URL);
 }
