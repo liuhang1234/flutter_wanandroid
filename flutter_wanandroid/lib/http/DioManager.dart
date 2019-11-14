@@ -39,4 +39,26 @@ class DioManager {
       failCallBack(response);
     }
   }
+
+  void postHttp<T>(
+    String url, {
+    Function(T t) onSuccess,
+    Function(String error) onError,
+  }) async {
+    try {
+      Response response;
+      response = await dio.post(url);
+      if (response.statusCode == 200) {
+        if (onSuccess != null) {
+          onSuccess(response.data);
+        }
+      } else {
+        throw Exception('statusCode:${response.statusCode}');
+      }
+      print('响应数据：' + response.toString());
+    } catch (e) {
+      print('请求出错：' + e.toString());
+      onError(e.toString());
+    }
+  }
 }

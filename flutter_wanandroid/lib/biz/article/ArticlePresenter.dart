@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_wanandroid/api/Api.dart';
+import 'package:flutter_wanandroid/data/BannerModel.dart';
 import 'package:flutter_wanandroid/http/DioManager.dart';
+import 'package:flutter_wanandroid/model/Banner/BannerBean.dart';
 
 import 'ArticleContract.dart';
 
@@ -14,10 +18,12 @@ class ArticlePresenter extends Presenter {
   @override
   void getArticleList() async {
     DioManager.getInstance().get(Api.HOME_BANNER, (value) {
-      _view.showArticle(value);
-    }, (error) {
-      _view.showArticle('error');
-    }, _mToken);
+      BannerModel bannerModel = BannerModel.fromJson(json.decode(value));
+      if (bannerModel.errorCode == 0) {
+        List<BannerBean> list = bannerModel.data;
+        _view.showArticle(list);
+      }
+    }, (error) {}, _mToken);
   }
 
   @override
