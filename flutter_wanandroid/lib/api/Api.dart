@@ -1,8 +1,11 @@
 class Api {
   static final String BASE_URL = "https://www.wanandroid.com/";
 
+  // banner
   static final String HOME_BANNER = "banner/json";
-  static final String HOME_LIST = BASE_URL + "article/list/";
+  //文章列表
+  static final String HOME_LIST = "article/list/";
+
   static final String PROJECT_NEWEST = BASE_URL + "article/listproject/";
   static final String PROJECT_CLASSIFY = BASE_URL + "project/tree/json";
   static final String PROJECT_LIST = BASE_URL + "project/list/";
