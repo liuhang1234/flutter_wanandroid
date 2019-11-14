@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_wanandroid/api/Api.dart';
-import 'package:flutter_wanandroid/data/BannerModel.dart';
+import 'package:flutter_wanandroid/data/banner/BannerModel.dart';
 import 'package:flutter_wanandroid/http/DioManager.dart';
 import 'package:flutter_wanandroid/model/Banner/BannerBean.dart';
 

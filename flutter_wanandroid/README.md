@@ -86,6 +86,10 @@ samples, guidance on mobile development, and a full API reference.
           'type': instance.type,
           'url': instance.url,
         };
+        
+    flutter packages pub run build_runner clean || 
+    flutter packages pub run build_runner build --delete-conflicting-outputs 生成json.g.dart有问题时
+        
 
 
 
