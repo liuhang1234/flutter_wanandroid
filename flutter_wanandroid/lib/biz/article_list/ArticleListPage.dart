@@ -1,9 +1,8 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/common/GlobalConfig.dart';
 import 'package:flutter_wanandroid/model/article/ArticleDetailBean.dart';
 
+import 'ArticleItemPage.dart';
 import 'ArticleListContract.dart';
 import 'ArticleListPresenter.dart';
 
@@ -25,7 +24,7 @@ class _ArticleListPage extends State<ArticleListPage> implements View {
   ListView listView;
   List<ArticleDetailBean> _listData = List();
   double _screenHeight;
-  var _haveMoreData = true;
+  bool _haveMoreData = true;
 
   @override
   void initState() {
@@ -33,7 +32,7 @@ class _ArticleListPage extends State<ArticleListPage> implements View {
     super.initState();
     new ArticleListPresenter(this);
     _presenter.subscribe();
-    _presenter.getArticleList(_index);
+    handleRefresh();
   }
 
   @override
@@ -53,7 +52,6 @@ class _ArticleListPage extends State<ArticleListPage> implements View {
       );
     }
     listView = ListView.builder(
-      controller: getControllerForListView(),
       itemCount: itemCount,
       itemBuilder: (context, index) {
         if (index == 0 && null != widget.banner) {
@@ -62,12 +60,16 @@ class _ArticleListPage extends State<ArticleListPage> implements View {
             _listData.length) {
           return _buildLoadMoreItem();
         } else {
-          _buildListViewItemLayout(context, index);
+          return _buildListViewItemLayout(context, index);
         }
       },
     );
-
-    var body = NotificationListener<ScrollNotification>(
+    var body = RefreshIndicator(
+      child: listView,
+      onRefresh: handleRefresh,
+      displacement: 50,
+    );
+    var body2 = NotificationListener<ScrollNotification>(
       onNotification: onScrollNotification,
       child: RefreshIndicator(
         child: listView,
@@ -75,17 +77,24 @@ class _ArticleListPage extends State<ArticleListPage> implements View {
         onRefresh: handleRefresh,
       ),
     );
+//    return Scaffold(
+//      resizeToAvoidBottomInset: false,
+//      body: body,
+//    );
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: body,
+      body: body2,
     );
   }
 
   ScrollController _controller;
 
+  //加载更多
   ScrollController getControllerForListView() {
     if (widget.selfControl) {
       if (null == _controller) _controller = ScrollController();
+      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+        _loadNextPage();
+      }
       return _controller;
     } else {
       return null;
@@ -97,9 +106,12 @@ class _ArticleListPage extends State<ArticleListPage> implements View {
         duration: Duration(milliseconds: 200), curve: Curves.fastOutSlowIn);
   }
 
-  handleRefresh() {
+  Future<Null> handleRefresh() async {
     _index = 0;
     _presenter.getArticleList(_index);
+    await Future<Null>.delayed(Duration(seconds: 3), () {
+      return null;
+    });
   }
 
   bool onScrollNotification(ScrollNotification scrollNotification) {
@@ -107,14 +119,14 @@ class _ArticleListPage extends State<ArticleListPage> implements View {
         scrollNotification.metrics.maxScrollExtent) {
       _loadNextPage();
     }
-    if (null == _screenHeight || _screenHeight <= 0) {
-      _screenHeight = MediaQueryData.fromWindow(ui.window).size.height;
-    }
-    if (scrollNotification.metrics.axisDirection == AxisDirection.down &&
-        _screenHeight >= 10 &&
-        scrollNotification.metrics.pixels >= _screenHeight) {
-      return true;
-    } else {}
+//    if (null == _screenHeight || _screenHeight <= 0) {
+//      _screenHeight = MediaQueryData.fromWindow(ui.window).size.height;
+//    }
+//    if (scrollNotification.metrics.axisDirection == AxisDirection.down &&
+//        _screenHeight >= 10 &&
+//        scrollNotification.metrics.pixels >= _screenHeight) {
+//      return true;
+//    } else {}
     return false;
   }
 
@@ -141,6 +153,7 @@ class _ArticleListPage extends State<ArticleListPage> implements View {
         index >= _listData.length) {
       return Container();
     }
+    return ArticleItemPage(_listData[index]);
   }
 
   @override
