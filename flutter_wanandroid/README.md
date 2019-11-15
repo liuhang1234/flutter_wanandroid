@@ -90,7 +90,7 @@ samples, guidance on mobile development, and a full API reference.
     flutter packages pub run build_runner clean || 
     flutter packages pub run build_runner build --delete-conflicting-outputs 生成json.g.dart有问题时
     
-##  2 类似viewpager + fragment + bottomnavigation联动
+##  2 类似viewpager + fragment + bottomnavigation联动 底部导航
     保留view 不被销毁 以 _ArticleListPage为例
     1) _ArticleListPage with AutomaticKeepAliveClientMixin 
     2)  重写

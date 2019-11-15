@@ -74,9 +74,6 @@ class _PageMain extends State<PageMain> {
     // TODO: implement build
     return Scaffold(
       body: Scaffold(
-        appBar: AppBar(
-          title: Text('玩Android'),
-        ),
         body: PageView(
           children: <Widget>[
             mainPage,
