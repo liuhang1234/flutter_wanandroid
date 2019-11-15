@@ -18,7 +18,9 @@ class ArticleListPage extends StatefulWidget {
   }
 }
 
-class _ArticleListPage extends State<ArticleListPage> implements View {
+class _ArticleListPage extends State<ArticleListPage>
+    with AutomaticKeepAliveClientMixin
+    implements View {
   ArticleListPresenter _presenter;
   int _index = 0;
   ListView listView;
@@ -64,13 +66,10 @@ class _ArticleListPage extends State<ArticleListPage> implements View {
         }
       },
     );
-    var body = RefreshIndicator(
-      child: listView,
-      onRefresh: handleRefresh,
-      displacement: 50,
-    );
+
     var body2 = NotificationListener<ScrollNotification>(
       onNotification: onScrollNotification,
+      // 下拉刷新控件
       child: RefreshIndicator(
         child: listView,
         color: GlobalConfig.colorPrimary,
@@ -158,7 +157,6 @@ class _ArticleListPage extends State<ArticleListPage> implements View {
 
   @override
   void setPresenter(Presenter presenter) {
-    // TODO: implement setPresenter
     _presenter = presenter;
   }
 
@@ -168,4 +166,8 @@ class _ArticleListPage extends State<ArticleListPage> implements View {
       _listData = data;
     });
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

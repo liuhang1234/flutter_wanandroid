@@ -15,7 +15,7 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-##   json使用 link https://blog.csdn.net/qq_31350875/article/details/90498384
+## 1json使用 link https://blog.csdn.net/qq_31350875/article/details/90498384
   1.新建类和属性（字段）以及带参构造方法，注意属性类型
   2.引入json_annotation，即插入import 'package:json_annotation/json_annotation.dart';
   3.指定此类的生成代码，part '类名.g.dart';需要放入到实体类中
@@ -89,6 +89,15 @@ samples, guidance on mobile development, and a full API reference.
         
     flutter packages pub run build_runner clean || 
     flutter packages pub run build_runner build --delete-conflicting-outputs 生成json.g.dart有问题时
+    
+##  2 类似viewpager + fragment + bottomnavigation联动
+    保留view 不被销毁 以 _ArticleListPage为例
+    1) _ArticleListPage with AutomaticKeepAliveClientMixin 
+    2)  重写
+          @override
+          // TODO: implement wantKeepAlive
+          bool get wantKeepAlive => true;
+          改为true即可 这样 该页面 即可不会被销毁
         
 
 

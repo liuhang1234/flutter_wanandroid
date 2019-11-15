@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/biz/article/ArticlePage.dart';
+import 'package:flutter_wanandroid/biz/mine/MinePage.dart';
+import 'package:flutter_wanandroid/biz/project/ProjectPage.dart';
+import 'package:flutter_wanandroid/biz/system/SystemPage.dart';
+import 'package:flutter_wanandroid/biz/wechatnum/WeChatNumPage.dart';
 
+// 首页
 class PageMain extends StatefulWidget {
   @override
   State<PageMain> createState() {
@@ -10,6 +15,14 @@ class PageMain extends StatefulWidget {
 }
 
 class _PageMain extends State<PageMain> {
+  Widget mainPage = ArticlePage();
+  Widget projectPage = ProjectPage();
+  Widget systemPage = SystemPage();
+  Widget wechatPage = WeChatNumPage();
+  Widget minePage = MinePage();
+
+  PageController _pageController;
+
   List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
         icon: Icon(Icons.book),
@@ -43,10 +56,17 @@ class _PageMain extends State<PageMain> {
         )),
   ];
   int _selectedIndex = 0;
+
+  // bottomnaviagtionbar 和 pageview 的联动
   void _onItemTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    _pageController.animateToPage(index,
+        duration: const Duration(milliseconds: 300), curve: Curves.ease);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: this._selectedIndex);
   }
 
   @override
@@ -57,8 +77,16 @@ class _PageMain extends State<PageMain> {
         appBar: AppBar(
           title: Text('玩Android'),
         ),
-        body: Center(
-          child: ArticlePage(),
+        body: PageView(
+          children: <Widget>[
+            mainPage,
+            projectPage,
+            wechatPage,
+            systemPage,
+            minePage
+          ],
+          onPageChanged: _onPageChanged,
+          controller: _pageController,
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: items,
@@ -73,5 +101,17 @@ class _PageMain extends State<PageMain> {
         ),
       ),
     );
+  }
+
+  _onPageChanged(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
   }
 }
