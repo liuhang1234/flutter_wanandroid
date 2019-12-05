@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 part 'ProjectClassifyBean.g.dart';
-
+// 项目分类
 @JsonSerializable()
 class ProjectClassifyBean {
   List<String> children;

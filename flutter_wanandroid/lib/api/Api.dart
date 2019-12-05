@@ -7,7 +7,7 @@ class Api {
   static final String HOME_LIST = "article/list/";
 
   static final String PROJECT_NEWEST = BASE_URL + "article/listproject/";
-  static final String PROJECT_CLASSIFY = BASE_URL + "project/tree/json";
+  static final String PROJECT_TREE =  "project/tree/json";
   static final String PROJECT_LIST = BASE_URL + "project/list/";
   static final String SEARCH_LIST = BASE_URL + "article/query/";
   static final String TREES_LIST = BASE_URL + "tree/json";

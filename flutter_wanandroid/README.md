@@ -99,6 +99,16 @@ samples, guidance on mobile development, and a full API reference.
           bool get wantKeepAlive => true;
           改为true即可 这样 该页面 即可不会被销毁
         
-
-
+## 3 AppBar占用顶部状态栏
+    使用SafeArea包裹着该view,就不会占用状态栏了，使用在ProjectPage.dart
+    SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.white70,
+              appBar: tabBar,
+              body: tabBarBodyView,
+            )
+          );
+    详细使用见 
+    Flutter SafeArea - 异形屏适配利器
+    https://cloud.tencent.com/developer/article/1472092
 

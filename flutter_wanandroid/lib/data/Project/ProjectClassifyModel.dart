@@ -3,7 +3,7 @@ import 'package:flutter_wanandroid/model/project/ProjectClassifyBean.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'ProjectClassifyModel.g.dart';
-
+// 项目 tab 标题
 @JsonSerializable()
 class ProjectClassifyModel extends Response<List<ProjectClassifyBean>> {
   ProjectClassifyModel(
