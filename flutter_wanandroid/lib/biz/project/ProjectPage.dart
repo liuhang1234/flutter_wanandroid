@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/biz/project/ProjectContract.dart';
 import 'package:flutter_wanandroid/biz/project/ProjectPresenter.dart';
+import 'package:flutter_wanandroid/biz/project/project_list/ProjectListPage.dart';
 import 'package:flutter_wanandroid/model/project/ProjectClassifyBean.dart';
 
 class ProjectPage extends StatefulWidget {
@@ -90,18 +91,18 @@ class _ProjectPageState extends State<ProjectPage>
     //构造 TabBarView
     tabBarBodyView = TabBarView(
       controller: tabController,
+      // tabs 转listwidget
       children: tabs.map((e) {
         //创建Tab页
         return Container(
           alignment: Alignment.center,
-          child: Text(
-            e.name,
-            textScaleFactor: 1,
-          ),
-        );
+          child: _buildSinglePage(e),
+          );
       }).toList(),
     );
   }
+
+
 
   @override
   void setPresenter(Presenter presenter) {
@@ -117,6 +118,10 @@ class _ProjectPageState extends State<ProjectPage>
     buildTabBar();
     buildBodyView();
 
+  }
+
+  Widget _buildSinglePage(ProjectClassifyBean bean) {
+        return ProjectListPage(classifyBean: bean);
   }
 }
 

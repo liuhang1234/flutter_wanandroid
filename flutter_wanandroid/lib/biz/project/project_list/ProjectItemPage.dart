@@ -1,67 +1,71 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_wanandroid/api/Api.dart';
 import 'package:flutter_wanandroid/common/GlobalConfig.dart';
-import 'package:flutter_wanandroid/model/article/ArticleDetailBean.dart';
+import 'package:flutter_wanandroid/model/project/ProjectClassifyDetailBean.dart';
 import 'package:flutter_wanandroid/utils/StringUtil.dart';
 import 'package:flutter_wanandroid/widget/StrokeWidget.dart';
 
-class ArticleItemPage extends StatelessWidget {
-  final ArticleDetailBean item;
+class ProjectItemPage extends StatelessWidget{
+  final ProjectClassifyDetailBean item;
+
   // ignore: non_constant_identifier_names
-  static final String TAG = "ArticleItemPage";
-  ArticleItemPage(this.item);
+  static final String TAG = "ProjectItemPage";
+
+  ProjectItemPage(this.item);
 
   @override
   Widget build(BuildContext context) {
     item.title = StringUtil.strClean(item.title);
     item.desc = (null == item.desc) ? "" : StringUtil.strClean(item.desc);
     return GestureDetector(
-      onTap: () {
+      onTap: (){
         print(TAG);
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 2.5),
-        child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-          elevation: 5.0,
+        padding: EdgeInsets.symmetric(vertical: 5.0,horizontal: 2.5),// 左右边距 上下边距
+        child: Card(// 用cardview包裹
+        shape: RoundedRectangleBorder(borderRadius:  BorderRadius.circular(5.0)),// 圆角
+          elevation: 5.0,//阴影
           child: Padding(
-              child: buildItem(item),
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0)),
+            padding: EdgeInsets.symmetric(vertical: 10.0,horizontal: 20.0),// 内边距
+            child: buildItem(item),
+          ),
         ),
+
       ),
     );
   }
-
-  Widget buildItem(ArticleDetailBean item) {
+  Widget buildItem(ProjectClassifyDetailBean item) {
     var widget = (null != item.envelopePic &&
-            item.envelopePic.isNotEmpty &&
-            !item.envelopePic.endsWith(Api.DEFAULT_PROJECT_IMG)) //默认图片就不显示了
-        ? Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Expanded(
-                child: _buildItemLeftSide(item),
-              ),
-              Container(
-                width: 30.0,
-                child: Image.network(item.envelopePic),
-              )
-            ],
-          )
+        item.envelopePic.isNotEmpty &&
+        !item.envelopePic.endsWith(Api.DEFAULT_PROJECT_IMG)) //默认图片就不显示了
+        ?
+    Row(                          // Row 水平排列 三木运算符
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Expanded(
+          child: _buildItemLeftSide(item),
+        ),
+        Container(
+          width: 30.0,
+          child: Image.network(item.envelopePic),
+        )
+      ],
+    )
         : _buildItemLeftSide(item);
     return widget;
   }
 
-  Widget _buildItemLeftSide(ArticleDetailBean item) {
-    return Column(
+  Widget _buildItemLeftSide(ProjectClassifyDetailBean item) {
+    return Column( // 垂直排列
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: _buildItemLeftColumns(item),
     );
   }
 
-  List<Widget> _buildItemLeftColumns(ArticleDetailBean item) {
+  List<Widget> _buildItemLeftColumns(ProjectClassifyDetailBean item) {
     List<Widget> list = List();
     list.add(Text(
       item.title,
@@ -112,7 +116,7 @@ class ArticleItemPage extends StatelessWidget {
     return list;
   }
 
-  List<Widget> _buildTagsAndDate(ArticleDetailBean item) {
+  List<Widget> _buildTagsAndDate(ProjectClassifyDetailBean item) {
     List<Widget> list = List();
     item.tags?.forEach((tag) {
       list.add(StrokeWidget(
