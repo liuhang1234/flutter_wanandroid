@@ -25,8 +25,8 @@ class _ArticleListPage extends State<ArticleListPage>
   int _index = 0;
   ListView listView;
   List<ArticleDetailBean> _listData = List();
-  double _screenHeight;
   bool _haveMoreData = true;
+  bool _loading;
 
   @override
   void initState() {
@@ -107,6 +107,7 @@ class _ArticleListPage extends State<ArticleListPage>
 
   Future<Null> handleRefresh() async {
     _index = 0;
+    _loading = true;
     _presenter.getArticleList(_index);
     await Future<Null>.delayed(Duration(seconds: 3), () {
       return null;
@@ -116,21 +117,16 @@ class _ArticleListPage extends State<ArticleListPage>
   bool onScrollNotification(ScrollNotification scrollNotification) {
     if (scrollNotification.metrics.pixels >=
         scrollNotification.metrics.maxScrollExtent) {
-      _loadNextPage();
+      if(!_loading){
+        _loadNextPage();
+      }
     }
-//    if (null == _screenHeight || _screenHeight <= 0) {
-//      _screenHeight = MediaQueryData.fromWindow(ui.window).size.height;
-//    }
-//    if (scrollNotification.metrics.axisDirection == AxisDirection.down &&
-//        _screenHeight >= 10 &&
-//        scrollNotification.metrics.pixels >= _screenHeight) {
-//      return true;
-//    } else {}
-    return false;
+    return true;
   }
 
   _loadNextPage() {
     _index++;
+    _loading = true;
     _presenter.getArticleList(_index);
   }
 
@@ -163,6 +159,7 @@ class _ArticleListPage extends State<ArticleListPage>
   @override
   void showArticle(List<ArticleDetailBean> data) {
     setState(() {
+      _loading = false;
       _listData = data;
     });
   }

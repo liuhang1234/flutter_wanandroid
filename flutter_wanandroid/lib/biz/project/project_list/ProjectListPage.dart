@@ -27,6 +27,7 @@ class _ProjectListPage extends State<ProjectListPage>
   int _index = 1;
   ListView listView;
   List<ProjectClassifyDetailBean> _listData = List();
+  bool _loading;
 
 
   @override
@@ -57,6 +58,7 @@ class _ProjectListPage extends State<ProjectListPage>
   // 下拉刷新
   Future<Null> handleRefresh() async {
     _index = 1;
+    _loading = true;
     _presenter.getProjectList(_index,widget.classifyBean.id);
     await Future<Null>.delayed(Duration(seconds: 3), () {
       return null;
@@ -67,13 +69,17 @@ class _ProjectListPage extends State<ProjectListPage>
   bool onScrollNotification(ScrollNotification scrollNotification) {
     if (scrollNotification.metrics.pixels >=
         scrollNotification.metrics.maxScrollExtent) {
-      _loadNextPage();
+      if(!_loading) {
+        _loadNextPage();
+      }
+
     }
     return false;
   }
   // 加载更多
   _loadNextPage() {
     _index++;
+    _loading = true;
     _presenter.getProjectList(_index,widget.classifyBean.id);
   }
 
@@ -97,6 +103,7 @@ class _ProjectListPage extends State<ProjectListPage>
   void showProject(List<ProjectClassifyDetailBean> data) {
     setState(() {
       _listData = data;
+      _loading = false;
     });
   }
 
