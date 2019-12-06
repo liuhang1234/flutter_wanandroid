@@ -64,6 +64,7 @@ class _ProjectPageState extends State<ProjectPage>
   void dispose() {
     super.dispose();
     tabController.dispose();
+    _presenter.unsubscribe();
   }
 
   void buildTabBar() {

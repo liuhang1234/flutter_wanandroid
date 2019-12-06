@@ -8,6 +8,7 @@ import 'package:flutter_wanandroid/model/Banner/BannerBean.dart';
 import 'ArticleContract.dart';
 import 'ArticlePresenter.dart';
 
+// banner 获取
 class ArticlePage extends StatefulWidget {
   @override
   State<ArticlePage> createState() {
@@ -43,7 +44,6 @@ class _ArticlePage extends State<ArticlePage> implements View {
   @override
   void dispose() {
     super.dispose();
-    print("dispose");
     _presenter.unsubscribe();
   }
 
