@@ -12,8 +12,10 @@ class Api {
   static final String SEARCH_LIST = BASE_URL + "article/query/";
   static final String TREES_LIST = BASE_URL + "tree/json";
   static final String TREES_DETAIL_LIST = BASE_URL + "article/list/";
-  static final String MP_WECHAT_NAMES = BASE_URL + "wxarticle/chapters/json";
-  static final String MP_WECHAT_LIST = BASE_URL + "wxarticle/list/";
+  // 微信公众号
+  static final String MP_WECHAT_NAMES = "wxarticle/chapters/json";
+  // 某个公众号列表
+  static final String MP_WECHAT_LIST =  "wxarticle/list/";
   static final String AVATAR = "https://api.adorable.io/avatars/200/";
   static final String AVATAR_GITHUB = "https://github.com/identicons/";
   static final String AVATAR_CODING =

@@ -40,6 +40,12 @@ class DioManager {
     }
   }
 
+   Future<Response> getWithResponse(String url,{CancelToken token,Map<String, dynamic> queryParameters}) async{
+     return await dio.get(url, cancelToken: token,queryParameters:queryParameters);
+  }
+
+
+
   void postHttp<T>(
     String url, {
     Function(T t) onSuccess,

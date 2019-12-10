@@ -112,3 +112,12 @@ samples, guidance on mobile development, and a full API reference.
     Flutter SafeArea - 异形屏适配利器
     https://cloud.tencent.com/developer/article/1472092
 
+## 4 上拉加载更多 需要自己去维护当前是否正在加载更多，不够好，使用bloc来管理
+    
+    
+## flutter 学习
+    [Flutter基础](http://liuwangshu.cn/tags/Flutter%E5%9F%BA%E7%A1%80/)
+    [Flutter指北系列](https://www.jianshu.com/u/9fcd71535294)
+    
+    
+    
